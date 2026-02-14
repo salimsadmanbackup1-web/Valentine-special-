@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Do You Love Me? 💕</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .page { display: none; }
+        .active { display: block; }
+
+        h1 { color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+
+        /* আগের পেঙ্গুইন ইমেজ */
+        img {
+            width: 200px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-group {
+            margin-top: 20px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        #yes {
+            background: white;
+            color: #ff4b7d;
+        }
+
+        #no {
+            background: #ff4b7d;
+            color: white;
+            transition: all 0.2s ease;
+        }
+
+        /* মেসেজ বক্স */
+        .message-box {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            line-height: 1.8;
+            color: #333;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        /* Happy Valentine's Day এর নতুন কালার */
+        .valentine-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #e63946, #ff007f, #ffcc00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+            filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.1));
+        }
+
+        .iloveyou {
+            font-size: 38px;
+            color: #ff4b7d;
+            font-weight: bold;
+            display: block;
+            margin-top: 15px;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* পাপড়ি ইফেক্ট */
+        .petal {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="page active" id="page1">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0e/Little_Penguin_Eudyptula_minor.jpg" alt="Penguin">
+            <h1>Do You Love Me? 🐧💖</h1>
+            <div class="btn-group">
+                <button id="yes" onclick="celebrate()">Yes 🐺</button>
+                <button id="no" onmouseover="moveNo()" ontouchstart="moveNo()">No👍</button>
+            </div>
+        </div>
+
+        <div class="page" id="page2">
+            <div class="message-box">
+                <h1 class="valentine-title">Happy Valentine’s Day 💕</h1>
+                <h2 style="color: #ff4b7d;">Yayyyy!!! (IK)🐧❤️</h2>
+                তুমি আমার জীবনের সবচেয়ে সুন্দর অনুভূতি 💖<br>
+                তোমার হাসিটাই আমার পৃথিবীর সবচেয়ে প্রিয় জিনিস(btw kaannna korleo sundor e lage jemne thako omnei sundor e lage) <br>
+                তুমি থাকলেই সবকিছু সম্পূর্ণ লাগে💝️<br>
+                আজ আর সবসময় — ভালোবাসি শুধু তোমাকেই 🐧💕<br>
+                <span class="iloveyou">I LOVE YOU! 💍</span>
+            </div>
+        </div>
+    </div>
+
+<script>
+    function moveNo() {
+        const btn = document.getElementById("no");
+        const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+        const y = Math.random() * (window.innerHeight - btn.offsetHeight);
+        
+        btn.style.position = "fixed";
+        btn.style.left = x + "px";
+        btn.style.top = y + "px";
+    }
+
+    function celebrate() {
+        document.getElementById("page1").classList.remove("active");
+        document.getElementById("page2").classList.add("active");
+        
+        confetti({
+            particleCount: 200,
+            spread: 80,
+            origin: { y: 0.6 },
+            colors: ['#ff4b7d', '#ffffff', '#ffcc00']
+        });
+    }
+
+    function createPetal() {
+        const petal = document.createElement("div");
+        petal.classList.add("petal");
+        const items = ["❤️", "🌸", "💖", "🌷"];
+        petal.innerHTML = items[Math.floor(Math.random() * items.length)];
+        
+        petal.style.left = Math.random() * 100 + "vw";
+        petal.style.top = "-5vh";
+        petal.style.fontSize = Math.random() * 20 + 15 + "px";
+        
+        const duration = Math.random() * 3 + 3;
+        petal.style.animationDuration = duration + "s";
+        
+        document.body.appendChild(petal);
+        setTimeout(() => { petal.remove(); }, duration * 1000);
+    }
+
+    setInterval(createPetal, 150); // পাপড়ি পড়ার স্পিড বাড়ালাম
+</script>
+
+</body>
+</html>ber(document.getElementById('cook').value) || 0) + 
+                       (Number(document.getElementById('others').value) || 0);
+    
+    document.getElementById('displayTotalFixed').innerText = totalFixed.toFixed(2);
+    if(tbody.rows.length > 0) {
+        perMemberCost = totalFixed / tbody.rows.length;
+        document.getElementById('displayPerMember').innerText = perMemberCost.toFixed(2);
+        Array.from(tbody.rows).forEach(row => {
+            row.cells[5].querySelector('input').value = perMemberCost.toFixed(2);
+            refreshRowCalculations(row);
+        });
+    }
+    updateFooter();
+}
+
+function addRow(){
+    let row = tbody.insertRow();
+    row.innerHTML = `<td>${tbody.rows.length}</td><td><input type="text"></td><td><input type="number" class="meal-input" oninput="globalRecalc()"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td>`;
+    calculateFixed();
+}
+
+function removeLastRow() { if (tbody.rows.length > 0) { tbody.deleteRow(-1); calculateFixed(); globalRecalc(); } }
+
+function globalRecalc() {
+    let tM = 0, tD = 0;
+    Array.from(tbody.rows).forEach(r => {
+        tM += Number(r.cells[2].querySelector('input').value || 0);
+        tD += Number(r.cells[7].querySelector('input').value || 0);
+    });
+    currentMealRate = (tM > 0) ? (tD / tM) : 0;
+    document.getElementById('mealRateDisplay').innerText = currentMealRate.toFixed(2);
+    Array.from(tbody.rows).forEach(r => refreshRowCalculations(r));
+    updateFooter();
+}
+
+function refreshRowCalculations(row) {
+    const m = Number(row.cells[2].querySelector('input').value || 0), f = Number(row.cells[5].querySelector('input').value || 0), d = Number(row.cells[7].querySelector('input').value || 0);
+    row.cells[3].querySelector('input').value = currentMealRate.toFixed(2);
+    row.cells[4].querySelector('input').value = (m * currentMealRate).toFixed(2);
+    row.cells[6].querySelector('input').value = ((m * currentMealRate) + f).toFixed(2);
+    row.cells[8].querySelector('input').value = (((m * currentMealRate) + f) - d).toFixed(2);
+}
+
+function manualRowCalc(el) {
+    const row = el.closest("tr");
+    const m = Number(row.cells[2].querySelector('input').value || 0), r = Number(row.cells[3].querySelector('input').value || 0), f = Number(row.cells[5].querySelector('input').value || 0), d = Number(row.cells[7].querySelector('input').value || 0);
+    row.cells[4].querySelector('input').value = (m * r).toFixed(2);
+    row.cells[6].querySelector('input').value = ((m * r) + f).toFixed(2);
+    row.cells[8].querySelector('input').value = (((m * r) + f) - d).toFixed(2);
+    updateFooter();
+}
+
+function updateFooter(){
+    let sM=0, sMC=0, sF=0, sT=0, sDep=0, sDue=0;
+    Array.from(tbody.rows).forEach(r=>{
+        sM += Number(r.cells[2].querySelector('input').value || 0);
+        sMC += Number(r.cells[4].querySelector('input').value || 0);
+        sF += Number(r.cells[5].querySelector('input').value || 0);
+        sT += Number(r.cells[6].querySelector('input').value || 0);
+        sDep += Number(r.cells[7].querySelector('input').value || 0);
+        sDue += Number(r.cells[8].querySelector('input').value || 0);
+    });
+    document.getElementById("sumMeal").innerText = sM;
+    document.getElementById("sumMealCost").innerText = sMC.toFixed(2);
+    document.getElementById("sumFixed").innerText = sF.toFixed(2);
+    document.getElementById("sumTotal").innerText = sT.toFixed(2);
+    document.getElementById("sumDeposit").innerText = sDep.toFixed(2);
+    document.getElementById("sumDue").innerText = sDue.toFixed(2);
+}
+
+function addManualRow() {
+    let row = customTbody.insertRow();
+    row.innerHTML = `<td>${customTbody.rows.length}</td><td><input type="text"></td><td><input type="number" class="meal-input" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td>`;
+}
+function removeManualRow() { if (customTbody.rows.length > 0) customTbody.deleteRow(-1); }
+
+for(let i=0; i<10; i++) addRow();
+
+function downloadPDF(){
+    const element = document.getElementById("pdfArea");
+    const opt = {
+        margin: 5,
+        filename: 'Mess_Accounts.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+        pagebreak: { mode: 'avoid-all' } 
+    };
+    html2pdf().set(opt).from(element).save();
+}
+</script>
+</body>
+</html>"></td><td><input type="number" class="meal-input" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td><td><input type="number" class="editable-cell" oninput="manualRowCalc(this)"></td><td><input type="number" class="editable-cell"></td>`;
+}
+function removeManualRow() { if (customTbody.rows.length > 0) customTbody.deleteRow(-1); }
+
+for(let i=0; i<10; i++) addRow();
+
+function downloadPDF(){
+    const element = document.getElementById("pdfArea");
+    const opt = {
+        margin: [10, 5, 10, 5],
+        filename: 'Mess_Report.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+        pagebreak: { mode: 'avoid-all' }
+    };
+    html2pdf().set(opt).from(element).save();
+}
+</script>
+
+</body>
+</html>ow(-1); }
+
+for(let i=0; i<10; i++) addRow();
+
+function downloadPDF(){
+    const element = document.getElementById("pdfArea");
+    const opt = {
+        margin: [10, 5, 10, 5],
+        filename: 'Mess_Report.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true, letterRendering: true, backgroundColor: '#ffffff' },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+    html2pdf().set(opt).from(element).save();
+}
+</script>
+
+</body>
+</html>
